@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TripPack</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo" aria-hidden="true">🧳</span>
+    <div>
+      <h1>TripPack</h1>
+      <p class="tagline">Weather-aware packing lists</p>
+    </div>
+  </div>
+  <button id="new-trip" class="btn btn-accent">+ New trip</button>
+</header>
+
+<main class="layout">
+  <!-- Trip list (left on desktop, top on mobile) -->
+  <aside class="panel trips">
+    <h2>My trips</h2>
+    <ul id="trip-list" class="trip-list"></ul>
+    <p id="no-trips" class="muted" hidden>No trips yet. Create your first trip.</p>
+  </aside>
+
+  <!-- Details of the selected trip -->
+  <section class="panel detail" id="detail" aria-live="polite">
+    <div id="empty-state" class="empty">
+      <p class="big">Where are you going?</p>
+      <p class="muted">Create a trip and TripPack builds a packing list from the weather at your destination.</p>
+    </div>
+
+    <div id="trip-view" hidden>
+      <div class="trip-head">
+        <div>
+          <h2 id="trip-title"></h2>
+          <p id="trip-meta" class="muted"></p>
+        </div>
+        <div class="actions">
+          <button id="edit-trip" class="btn">Edit</button>
+          <button id="delete-trip" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+
+      <h3>Weather <span id="weather-source" class="badge"></span></h3>
+      <div id="weather" class="weather"></div>
+
+      <div class="list-head">
+        <h3>Packing list</h3>
+        <button id="generate" class="btn btn-accent">Generate list</button>
+      </div>
+      <div class="progress" aria-label="Packing progress">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+      <p id="progress-text" class="muted"></p>
+      <div id="items"></div>
+
+      <form id="add-item" class="add-item">
+        <h3>Add your own item</h3>
+        <input name="name" placeholder="e.g. Travel adapter" maxlength="80" required aria-label="Item name">
+        <select name="category" aria-label="Category">
+          <option value="OTHER">Other</option>
+          <option value="DOCUMENTS">Documents</option>
+          <option value="CLOTHES">Clothes</option>
+          <option value="WEATHER">Weather</option>
+          <option value="ACTIVITY">Activity</option>
+          <option value="TOILETRIES">Toiletries</option>
+          <option value="TECH">Tech</option>
+        </select>
+        <input name="quantity" type="number" min="1" max="99" value="1" aria-label="Quantity">
+        <button class="btn btn-accent">Add</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- Create / edit trip form -->
+<dialog id="trip-dialog">
+  <form id="trip-form" method="dialog" novalidate>
+    <h2 id="dialog-title">New trip</h2>
+    <label>Destination
+      <div class="autocomplete">
+        <input id="destination" autocomplete="off" placeholder="Start typing a city" required>
+        <ul id="suggestions" class="suggestions" hidden></ul>
+      </div>
+    </label>
+    <p id="picked-place" class="muted small"></p>
+    <div class="row">
+      <label>From <input id="start" type="date" required></label>
+      <label>To <input id="end" type="date" required></label>
+    </div>
+    <label>Trip type
+      <select id="type">
+        <option value="CITY">City trip</option>
+        <option value="BEACH">Beach holiday</option>
+        <option value="HIKING">Hiking</option>
+        <option value="BUSINESS">Business</option>
+      </select>
+    </label>
+    <p id="form-error" class="error" role="alert"></p>
+    <div class="actions">
+      <button type="button" id="cancel" class="btn">Cancel</button>
+      <button type="submit" class="btn btn-accent">Save trip</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
