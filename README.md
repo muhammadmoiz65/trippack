@@ -24,8 +24,8 @@ Nothing else needs to be installed. Maven is included through the Maven wrapper 
 ## Install and run
 
 ```bash
-git clone <repository-url>
-cd trippack
+git clone https://github.com/muhammadmoiz65/iubh-java-project.git
+cd iubh-java-project
 
 # Windows
 mvnw.cmd spring-boot:run
